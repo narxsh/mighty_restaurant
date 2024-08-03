@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "856227094911",
+    "project_id": "groovy-delivery",
+    "storage_bucket": "groovy-delivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856227094911:android:c325322ff4143495a63a4a",
+        "android_client_info": {
+          "package_name": "com.groovy.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoTfzaIe5HNFS1bTG25cnEEf1ENaDAksc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856227094911:android:9747ecaa9b8bee2ea63a4a",
+        "android_client_info": {
+          "package_name": "com.groovy.delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoTfzaIe5HNFS1bTG25cnEEf1ENaDAksc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856227094911:android:adb19600fb41051ba63a4a",
+        "android_client_info": {
+          "package_name": "com.groovy.store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoTfzaIe5HNFS1bTG25cnEEf1ENaDAksc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
