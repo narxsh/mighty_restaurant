@@ -42,6 +42,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../common/widgets/input_amount_widget.dart';
+
 class OrderDetailsScreen extends StatefulWidget {
   final OrderModel orderModel;
   final bool isRunningOrder;
@@ -117,7 +119,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
         bool restConfModel = Get.find<SplashController>().configModel!.orderConfirmationModel != 'deliveryman';
         bool showSlider = controllerOrderModel != null ? (controllerOrderModel.orderStatus == 'pending'
             && (controllerOrderModel.orderType == 'take_away' || restConfModel || selfDelivery))
-            || controllerOrderModel.orderStatus == 'confirmed' || controllerOrderModel.orderStatus == 'processing'
+            // || controllerOrderModel.orderStatus == 'confirmed' || controllerOrderModel.orderStatus == 'processing'
+            || controllerOrderModel.orderStatus == 'confirmed' || controllerOrderModel.orderStatus == 'processing' || controllerOrderModel.orderStatus == 'paid'
             || (controllerOrderModel.orderStatus == 'accepted' && controllerOrderModel.confirmed != null)
             || (controllerOrderModel.orderStatus == 'handover' && (selfDelivery || controllerOrderModel.orderType == 'take_away')) : false;
         bool showBottomView = controllerOrderModel != null ? showSlider || controllerOrderModel.orderStatus == 'picked_up' || widget.isRunningOrder : false;
@@ -1026,13 +1029,40 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
                         },
                       ), barrierDismissible: false);
                     }else if(controllerOrderModel.orderStatus == 'processing') {
+
+                      // Get.dialog(InputAmountWidget(
+                      //   icon: Images.warning,
+                      //   title: "Collect cash from deliveryman",
+                      //   description: "Enter amount", onPressed: (String? amount){
+                      //   Get.back();
+                      //   Get.find<OrderController>().updateOrderStatus(controllerOrderModel.id, 'handover', collectedAmount: amount).then((success) {
+                      //     if(success) {
+                      //       Get.find<ProfileController>().getProfile();
+                      //       Get.find<OrderController>().getCurrentOrders();
+                      //     }
+                      //   });
+                      // },
+                      // ));
+                        
                       Get.find<OrderController>().updateOrderStatus(controllerOrderModel.id, 'handover').then((success) {
                         if(success) {
                           Get.find<ProfileController>().getProfile();
                           Get.find<OrderController>().getCurrentOrders();
                         }
                       });
-                    }else if(controllerOrderModel.orderStatus == 'confirmed' || (controllerOrderModel.orderStatus == 'accepted'
+                      print("sdfdff");
+                    }
+                    else if(controllerOrderModel.orderStatus == 'paid') {
+                        
+                      Get.find<OrderController>().updateOrderStatus(controllerOrderModel.id, 'picked_up').then((success) {
+                        if(success) {
+                          Get.find<ProfileController>().getProfile();
+                          Get.find<OrderController>().getCurrentOrders();
+                        }
+                      });
+                      print("sdfdff");
+                    }
+                    else if(controllerOrderModel.orderStatus == 'confirmed' || (controllerOrderModel.orderStatus == 'accepted'
                         && controllerOrderModel.confirmed != null)) {
                       Get.dialog(InputDialogWidget(
                         icon: Images.warning,
@@ -1093,9 +1123,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
                   label: Text(
                     (controllerOrderModel.orderStatus == 'pending' && (controllerOrderModel.orderType == 'take_away'
                         || restConfModel || selfDelivery))
-                        ? 'swipe_to_confirm_order'.tr : (controllerOrderModel.orderStatus == 'confirmed' || (controllerOrderModel.orderStatus == 'accepted'
-                        && controllerOrderModel.confirmed != null)) ? 'swipe_to_cooking'.tr
+                        ? 'swipe_to_confirm_order'.tr 
+                        : (controllerOrderModel.orderStatus == 'confirmed' || (controllerOrderModel.orderStatus == 'accepted'
+                        && controllerOrderModel.confirmed != null)) 
+                        ? 'swipe_to_cooking'.tr
                         : (controllerOrderModel.orderStatus == 'processing') ? 'swipe_if_ready_for_handover'.tr
+                        : (controllerOrderModel.orderStatus == 'paid') ? 'Swipe to confirm payment'
                         : (controllerOrderModel.orderStatus == 'handover' && (controllerOrderModel.orderType == 'take_away' || selfDelivery))
                         ? 'swipe_to_deliver_order'.tr : '',
                     style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).primaryColor),

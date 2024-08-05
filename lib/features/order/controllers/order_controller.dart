@@ -213,7 +213,36 @@ class OrderController extends GetxController implements GetxService {
     getPaginatedOrders(1, true);
   }
 
-  Future<bool> updateOrderStatus(int? orderID, String status, {bool back = false, String? processingTime, String? reason}) async {
+  // Future<bool> updateOrderStatus(int? orderID, String status, {bool back = false, String? processingTime, String? reason}) async {
+  //   _isLoading = true;
+  //   update();
+  //   List<MultipartBody> multiParts = [];
+  //   for(XFile file in _pickedPrescriptions) {
+  //     multiParts.add(MultipartBody('order_proof[]', file));
+  //   }
+  //   UpdateStatusModel updateStatusBody = UpdateStatusModel(
+  //     orderId: orderID, status: status,
+  //     otp: status == 'delivered' ? _otp : null,
+  //     processingTime: processingTime,
+  //     reason: reason,
+  //   );
+  //   ResponseModel responseModel = await orderServiceInterface.updateOrderStatus(updateStatusBody, multiParts);
+  //   Get.back(result: responseModel.isSuccess);
+  //   if(responseModel.isSuccess) {
+  //     if(back) {
+  //       Get.back();
+  //     }
+  //     getCurrentOrders();
+  //     showCustomSnackBar(responseModel.message, isError: false);
+  //   }else{
+  //     showCustomSnackBar(responseModel.message, isError: true);
+  //   }
+  //   _isLoading = false;
+  //   update();
+  //   return responseModel.isSuccess;
+  // }
+
+    Future<bool> updateOrderStatus(int? orderID, String status, {bool back = false, String? processingTime, String? reason,String? collectedAmount,}) async {
     _isLoading = true;
     update();
     List<MultipartBody> multiParts = [];
@@ -280,9 +309,18 @@ class OrderController extends GetxController implements GetxService {
         _runningOrders![1].orderList.add(order);
       }else if(order.orderStatus == 'processing' && (_campaignOnly ? order.foodCampaign == 1 : order.subscriptionId == null)) {
         _runningOrders![2].orderList.add(order);
-      }else if(order.orderStatus == 'handover' && (_campaignOnly ? order.foodCampaign == 1 : order.subscriptionId == null)) {
+      }
+      // else if(order.orderStatus == 'handover' && (_campaignOnly ? order.foodCampaign == 1 : order.subscriptionId == null)) {
+      //   _runningOrders![3].orderList.add(order);
+      // }
+
+      //updated above code by naresh to show all paid orders by deliveryman
+      else if(order.orderStatus == 'handover' || order.orderStatus == 'paid' && (_campaignOnly ? order.foodCampaign == 1 : order.subscriptionId == null)) {
         _runningOrders![3].orderList.add(order);
-      }else if(order.orderStatus == 'picked_up' && (_campaignOnly ? order.foodCampaign == 1 : order.subscriptionId == null)) {
+      }
+      //closed
+      
+      else if(order.orderStatus == 'picked_up' && (_campaignOnly ? order.foodCampaign == 1 : order.subscriptionId == null)) {
         _runningOrders![4].orderList.add(order);
       }
     }
