@@ -689,9 +689,28 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
                 ) : const SizedBox(),
                 // const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                SectionWidget(
+                // SectionWidget(
+                //   title: 'payment_method'.tr,
+                //   titleWidget: Text(order.paymentStatus!.tr, style: robotoMedium.copyWith(color: order.paymentStatus == 'paid' ? Colors.green : Colors.red),),
+                //   titleSpace: true,
+                //   child: Column(children: [
+                //     const Divider(),
+                //     Row(children: [
+                //       const CustomAssetImageWidget(image: Images.cash, height: 20, width: 20),
+                //       const SizedBox(width: Dimensions.paddingSizeSmall),
+
+                //       Text(order.paymentMethod == 'cash_on_delivery' ? 'cash_on_delivery'.tr
+                //           : order.paymentMethod == 'wallet' ? 'wallet_payment'.tr : order.paymentMethod == 'cash' ? 'cash'.tr
+                //           : order.paymentMethod == 'digital_payment' ? 'digital_payment'.tr : order.paymentMethod?.replaceAll('_', ' ')??'',
+                //           style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
+                //     ]),
+                //   ]),
+                // ),
+
+                // updated above widget by naresh to show payment method by deliveryman
+                 SectionWidget(
                   title: 'payment_method'.tr,
-                  titleWidget: Text(order.paymentStatus!.tr, style: robotoMedium.copyWith(color: order.paymentStatus == 'paid' ? Colors.green : Colors.red),),
+                  titleWidget: Text(order.paymentStatus == 'paid_by_deliveryman' ? "Paid by deliveryman" : order.paymentStatus!.tr, style: robotoMedium.copyWith(color: order.paymentStatus == 'paid' || order.paymentStatus == 'paid_by_deliveryman' ? Colors.green : Colors.red),),
                   titleSpace: true,
                   child: Column(children: [
                     const Divider(),
@@ -703,9 +722,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
                           : order.paymentMethod == 'wallet' ? 'wallet_payment'.tr : order.paymentMethod == 'cash' ? 'cash'.tr
                           : order.paymentMethod == 'digital_payment' ? 'digital_payment'.tr : order.paymentMethod?.replaceAll('_', ' ')??'',
                           style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
+
+                      // Text(order.paymentMethod == 'cash_on_delivery' ? order.paymentStatus == 'paid_by_deliveryman' ? 'Paid by deliveryman' : 'cash_on_delivery'.tr
+                      //     : order.paymentMethod == 'wallet' ? 'wallet_payment'.tr : order.paymentMethod == 'cash' ? 'cash'.tr
+                      //     : order.paymentMethod == 'digital_payment' ? 'digital_payment'.tr : order.paymentMethod?.replaceAll('_', ' ')??'',
+                      //     style: robotoRegular.copyWith(color: Theme.of(context).disabledColor)),
                     ]),
                   ]),
                 ),
+                //closed
 
                 const SizedBox(height: Dimensions.paddingSizeSmall),
 
@@ -1050,7 +1075,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
                           Get.find<OrderController>().getCurrentOrders();
                         }
                       });
-                      print("sdfdff");
                     }
                     else if(controllerOrderModel.orderStatus == 'paid') {
                         
@@ -1060,7 +1084,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> with WidgetsBin
                           Get.find<OrderController>().getCurrentOrders();
                         }
                       });
-                      print("sdfdff");
                     }
                     else if(controllerOrderModel.orderStatus == 'confirmed' || (controllerOrderModel.orderStatus == 'accepted'
                         && controllerOrderModel.confirmed != null)) {

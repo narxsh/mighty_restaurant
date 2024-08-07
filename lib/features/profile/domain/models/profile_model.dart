@@ -24,6 +24,7 @@ class ProfileModel {
   double? todaysEarning;
   double? thisWeekEarning;
   double? thisMonthEarning;
+  double? overallEarning;
   List<Restaurant>? restaurants;
   Subscription? subscription;
   SubscriptionOtherData? subscriptionOtherData;
@@ -63,6 +64,7 @@ class ProfileModel {
     this.todaysEarning,
     this.thisWeekEarning,
     this.thisMonthEarning,
+    this.overallEarning,
     this.restaurants,
     this.subscription,
     this.subscriptionOtherData,
@@ -103,6 +105,7 @@ class ProfileModel {
     todaysEarning = json['todays_earning']?.toDouble();
     thisWeekEarning = json['this_week_earning']?.toDouble();
     thisMonthEarning = json['this_month_earning']?.toDouble();
+    overallEarning = json['overall_earning']?.toDouble();
     if (json['restaurants'] != null) {
       restaurants = [];
       json['restaurants'].forEach((v) {
@@ -156,6 +159,7 @@ class ProfileModel {
     data['todays_earning'] = todaysEarning;
     data['this_week_earning'] = thisWeekEarning;
     data['this_month_earning'] = thisMonthEarning;
+    data['overall_earning'] = overallEarning;
     if (restaurants != null) {
       data['restaurants'] = restaurants!.map((v) => v.toJson()).toList();
     }

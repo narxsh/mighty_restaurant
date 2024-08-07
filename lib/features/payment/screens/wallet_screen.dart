@@ -72,7 +72,8 @@ class _WalletScreenState extends State<WalletScreen> {
                     ]),
                     const SizedBox(height: Dimensions.paddingSizeSmall),
 
-                    WalletWidget(title: 'total_earning'.tr, value: profileController.profileModel!.totalEarning, image: Images.totalWithdrawBgIcon),
+                    // WalletWidget(title: 'total_earning'.tr, value: profileController.profileModel!.totalEarning, image: Images.totalWithdrawBgIcon),
+                    WalletWidget(title: 'total_earning'.tr, value: profileController.profileModel!.overallEarning, image: Images.totalWithdrawBgIcon),
 
                     Padding(
                       padding: const EdgeInsets.only(top: Dimensions.paddingSizeExtraLarge),
